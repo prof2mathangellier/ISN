@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>bouger un pixel</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+
+<canvas id="snake" width="400" height="300" style="border:1px solid black"></canvas>
+
+<script>
+
+canvas = document.getElementById("snake");
+ctx = canvas.getContext("2d");
+
+Width=document.getElementById("snake").width;
+Height=document.getElementById("snake").height;
+
+// *******Constructeur pour les objets pixel ***********************************************
+Pixel = function (taille,x,y,couleur){
+	this.taille = taille;
+	this.x = x;
+	this.y = y;
+	this.couleur = couleur;
+
+	this.clear_pix = function() {
+					ctx.clearRect(this.x,this.y,this.taille,this.taille);
+					}
+
+	this.draw_pix = function() {
+					ctx.fillStyle = this.couleur;
+					ctx.fillRect(this.x,this.y,this.taille,this.taille);
+					}
+
+		}
+// *******************************************************************************************
+
+// Création d'un objet pixel à partir du constructeur --- une instance de Pixel
+
+pixel = new Pixel(10,15,15,'blue')
+pixel2 = new Pixel(20,70,4,"red")
+
+pixel.draw_pix();
+pixel2.draw_pix();
+
+function KeyDrive(evt) {
+
+	pixel.clear_pix();
+	
+	switch (evt.keyCode) {
+		case (38):pixel.y = pixel.y-10; //Direction == "up"
+				  break;
+		case (40):pixel.y = pixel.y+10; //Direction =="down"
+  			      break;
+		case (39):pixel.x = pixel.x+10; //Direction =="right"
+				  break;
+		case (37):pixel.x = pixel.x-10; //Direction =="left"
+  			      break;  			      
+  			  }
+ 
+    pixel.draw_pix();
+    pixel2.draw_pix(); // pixel2 ne bouge pas!!! pourquoi ???
+	}
+
+// abonnement à la fonction KeyDrive
+document.addEventListener('keydown',KeyDrive) // à chaque fois que l'événement 'keydown' est présent, KeyDrive est déclenchée
+</script>

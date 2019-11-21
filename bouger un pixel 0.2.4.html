@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>bouger un pixel</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+
+<canvas id="snake" width="400" height="300" style="border:1px solid black"></canvas>
+
+<script>
+
+canvas = document.getElementById("snake");
+ctx = canvas.getContext("2d");
+
+Width=document.getElementById("snake").width;
+Height=document.getElementById("snake").height;
+
+
+// *******Constructeur pour les objets pixel ***********************************************
+
+Pixel = function (taille,x,y,couleur){
+	this.taille = taille;
+	this.x = x;
+	this.y = y;
+	this.couleur = couleur;
+
+	this.clear_pix = function() {
+					ctx.clearRect(this.x,this.y,this.taille,this.taille);
+					}
+
+	this.draw_pix = function() {
+					ctx.fillStyle = this.couleur;
+					ctx.fillRect(this.x,this.y,this.taille,this.taille);
+					}
+
+	this.move_pix = function() {
+
+		
+		this.clear_pix();
+
+		switch (direction) {
+			case (38):this.y = this.y - 1;  console.log(direction);//direction == "up"
+					  break;
+			case (40):this.y = this.y + 1; //direction =="down"
+	  			      break;
+			case (39):this.x = this.x + 1; //direction =="right"
+					  break;
+			case (37):this.x = this.x - 1; //direction =="left"
+	  			      break;  			      
+	  			  }
+ 		
+ 		this.draw_pix();
+    
+			}
+
+		}
+// *******************************************************************************************
+
+
+
+
+function KeyDrive(evt) {  
+	
+	direction = evt.keyCode;
+	pix_1.move_pix();
+	pix_2.move_pix();
+	pix_3.move_pix();
+
+	}
+
+
+
+direction = ''
+
+// Création d'un objet pixel à partir du constructeur --- une instance de Pixel
+pix_1 = new Pixel(10,15,30,'blue');
+pix_2 = new Pixel(30,25,50,'yellow');
+pix_3 = new Pixel(20,10,10,'red');
+
+
+
+// abonnement à la fonction KeyDrive
+
+document.addEventListener('keydown', KeyDrive); // à chaque fois que l'événement 'keydown' est présent, KeyDrive est déclenchée
+
+</script>
+</html>
